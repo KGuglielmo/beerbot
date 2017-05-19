@@ -9,6 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "brewerydb-node": "0.0.1"
+    "brewerydb-node": "0.0.1",
+    "qs": "^6.4.0"
+  },
+  "devDependencies": {
+    "minimist": "^1.2.0"
   }
 }
