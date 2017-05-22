@@ -14,7 +14,7 @@ const defaults = {
 	timestamp: 1355517523.000005,
 	user_id: 'U2147483697',
 	user_name: 'Katherine',
-  text: 'BeerStein, tell me about Oktoberfest.',
+  text: 'BeerStein, tell me about Yuengling.',
   trigger_word: 'BeerStein'
 };
 
