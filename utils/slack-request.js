@@ -9,13 +9,16 @@ const defaults = {
 	token: 1,
 	team_id: 'T0001',
 	team_domain: 'example',
+	enterprise_id: 'E0001',
+	enterprise_name: 'Globular%20Construct%20Inc',
 	channel_id: 'C2147483705',
 	channel_name: 'test',
-	timestamp: 1355517523.000005,
 	user_id: 'U2147483697',
 	user_name: 'Katherine',
-  text: 'BeerStein, tell me about Yuengling.',
-  trigger_word: 'BeerStein'
+	command: '/beerstein',
+  text: 'tell me about Yuengling',
+  response_url: 'https://hooks.slack.com/commands/1234/5678'
+  // trigger_word: 'BeerStein'
 };
 
 module.exports = function (params) {
@@ -23,3 +26,5 @@ module.exports = function (params) {
     body: qs.stringify(Object.assign({}, defaults, params))
   };
 };
+
+

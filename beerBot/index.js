@@ -6,11 +6,12 @@ const cheers = require('../cheers');
 
 module.exports = function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
-    context.log(req);
 
     const body = qs.parse(req.body);
     const name = body.user_name;
     const slacktxt = body.text;
+
+    context.log(body);
 
     // if (process.env.SLACK_CHANNEL_NAMES.split(' ').indexOf(body.channel_name) === -1) {
     //   context.log(`Kegbot not available in #${ body.channel_name }`);

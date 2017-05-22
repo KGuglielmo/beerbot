@@ -2,7 +2,7 @@
 
 module.exports = function (context, name) {
     context.res = {
-        response_type: 'in_channel'
+        response_type: 'in_channel',
         attachments: [
             {
                 fallback: "Cheers to you, " + name + "!",
