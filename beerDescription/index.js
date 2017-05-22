@@ -40,15 +40,39 @@ module.exports = function (context, slacktxt) {
       if (foundBeer === true) {
         if ( nameArr.length > 1 ) {
           nameArr.map(function(result) {
-            breweriesArr.push(result.breweries[0].name);
+            breweriesArr.push({
+              name: 'brewery',
+              text: result.breweries[0].name,
+              type: 'button',
+              value: result.id
+            });
           });
-          botResponse = `A lot of breweries use the name ${ beerName }. Choose the brewery with the ${ beerName } that you wanted me to tell you about. ${ breweriesArr.join(', ') }`;
+
+          botResponse = {
+            text: `A lot of breweries use the name ${ beerName }.`,
+            attachments: [
+              {
+                text: `Choose the brewery with the ${ beerName } that you want me to tell you about.`,
+                fallback: 'You are unable to choose a beer',
+                callback_id: 'brewery_choice',
+                color: '#3AA3E3',
+                attachment_type: 'default',
+                actions: breweriesArr
+              }
+            ]
+          };
+          
           // TODO choose the brewery and search with beer and brewery
+
         } else {
-          botResponse = nameArr[0].style.description;
+          botResponse = {
+            text: nameArr[0].style.description
+          };
         }
       } else {
-        botResponse = `Did you mean one of these beers? ${ beerArr.join(', ') }`;
+        botResponse = {
+          text: `Did you mean one of these beers? ${ beerArr.join(', ') }`
+        };
         // TODO choose a beer and search again
       }
 
@@ -56,9 +80,7 @@ module.exports = function (context, slacktxt) {
     } else {
       botResponse = 'Sorry, I\'m too drunk to remember anything about that beer.';
     }
-    context.res = {
-      text: botResponse
-    }
+    context.res = botResponse;
     context.done();
   });
 };
