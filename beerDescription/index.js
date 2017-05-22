@@ -41,15 +41,14 @@ module.exports = function (context, slacktxt) {
         if ( nameArr.length > 1 ) {
           nameArr.map(function(result) {
             breweriesArr.push({
-              name: 'brewery',
               text: result.breweries[0].name,
-              type: 'button',
               value: result.id
             });
           });
 
           botResponse = {
             text: `A lot of breweries use the name ${ beerName }.`,
+            response_type: 'in_channel',
             attachments: [
               {
                 text: `Choose the brewery with the ${ beerName } that you want me to tell you about.`,
@@ -57,7 +56,14 @@ module.exports = function (context, slacktxt) {
                 callback_id: 'brewery_choice',
                 color: '#3AA3E3',
                 attachment_type: 'default',
-                actions: breweriesArr
+                actions: [
+                  {
+                    name: 'brewery_list',
+                    text: 'Choose a brewery...',
+                    type: 'select',
+                    options: breweriesArr
+                  }
+                ]
               }
             ]
           };
