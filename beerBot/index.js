@@ -7,7 +7,7 @@ const cheers = require('../cheers');
 module.exports = function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
     context.log(req);
-    
+
     const body = qs.parse(req.body);
     const name = body.user_name;
     const slacktxt = body.text;
@@ -24,7 +24,8 @@ module.exports = function (context, req) {
           cheers(context, name);
       } else {
           context.res = {
-              text: 'I\'m too busy drinking to answer you right now.'
+            response_type: 'in_channel',
+            text: 'I\'m too busy drinking to answer you right now.'
           };
           context.done();
       }

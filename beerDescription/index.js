@@ -72,6 +72,7 @@ module.exports = function (context, slacktxt) {
 
         } else { // Found 1 beer match
           botResponse = {
+            response_type: 'in_channel',
             text: resultMatch[0].style.description
           };
         }
@@ -84,8 +85,8 @@ module.exports = function (context, slacktxt) {
         });
 
         botResponse = {
-          text: `Sorry, ${ beerName } does not sound familiar to me. But maybe you meant a different beer name?`,
           response_type: 'in_channel',
+          text: `Sorry, ${ beerName } does not sound familiar to me. But maybe you meant a different beer name?`,
           attachments: [
             {
               text: `Choose the correct beer.`,
@@ -109,7 +110,10 @@ module.exports = function (context, slacktxt) {
 
 
     } else { // No matches/data found
-      botResponse = 'Sorry, I\'m too drunk to remember anything about that beer.';
+      botResponse = {
+        response_type: 'in_channel',
+        text: 'Sorry, I\'m too drunk to remember anything about that beer.'
+      }
     }
     context.res = botResponse;
     context.done();
