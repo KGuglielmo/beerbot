@@ -1,4 +1,7 @@
-"use strict";
+'use strict';
+
+// node utils/beerbot.js
+// node utils/beerbot.js --text="cheers"
 
 const qs = require('qs');
 
@@ -11,7 +14,7 @@ const defaults = {
 	timestamp: 1355517523.000005,
 	user_id: 'U2147483697',
 	user_name: 'Katherine',
-  text: 'BeerStein, can you tell me about Pabst Blue Ribbon (PBR)!',
+  text: 'BeerStein, tell me about Oktoberfest.',
   trigger_word: 'BeerStein'
 };
 

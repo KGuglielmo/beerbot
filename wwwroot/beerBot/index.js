@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const qs = require('qs');
 const beerDescription = require('../beerDescription');
@@ -15,13 +15,13 @@ module.exports = function (context, req) {
       context.done();
     } else if (true) {
       
-      if ( slacktxt.indexOf("tell me about") > -1 ) {
+      if ( slacktxt.indexOf('tell me about') > -1 ) {
           beerDescription(context, slacktxt);
-      } else if ( slacktxt.indexOf("cheers") > -1 ) {
+      } else if ( slacktxt.indexOf('cheers') > -1 ) {
           cheers(context, name);
       } else {
           context.res = {
-              text: "I'm too busy drinking to answer you right now."
+              text: 'I\'m too busy drinking to answer you right now.'
           };
           context.done();
       }
