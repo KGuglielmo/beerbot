@@ -10,10 +10,11 @@ module.exports = function (context, req) {
     const name = body.user_name;
     const slacktxt = body.text;
 
-    if (process.env.SLACK_CHANNEL_NAMES.split(' ').indexOf(body.channel_name) === -1) {
-      context.log(`Kegbot not available in #${ body.channel_name }`);
-      context.done();
-    } else if (true) {
+    // if (process.env.SLACK_CHANNEL_NAMES.split(' ').indexOf(body.channel_name) === -1) {
+    //   context.log(`Kegbot not available in #${ body.channel_name }`);
+    //   context.done();
+    // } else 
+    if (true) {
       
       if ( slacktxt.indexOf('tell me about') > -1 ) {
           beerDescription(context, slacktxt);
