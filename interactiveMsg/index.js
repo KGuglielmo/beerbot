@@ -8,15 +8,32 @@ module.exports = function (context, req) {
 
     const body = qs.parse(req.body);
     const payload = JSON.parse(body.payload);
-    context.log(body);
-    context.log(payload);
+    const selectedVal = payload.actions[0].selected_options[0].value;
 
-    if (true) {
-      context.log('Action URL finished!');
+    context.log(selectedVal);
+
+    if ( payload.callback_id === 'beer_choice' ) {
+      context.log('beer choice');
+      context.res = {
+        "response_type": "in_channel",
+        "replace_original": true,
+        "text": "Still under construction, but I'll show you your beer answer soon."
+      };
       context.done();
-
+    } else if ( payload.callback_id === 'brewery_choice' ) {
+      context.log('brewery choice');
+      context.res = {
+        "response_type": "in_channel",
+        "replace_original": true,
+        "text": "Still under construction, but I'll show you your brewery answer soon."
+      };
+      context.done();
     } else {
-      context.res = 'Invalid token.'
+      context.res = {
+        "response_type": "ephemeral",
+        "replace_original": false,
+        "text": "Sorry, that didn't work. Please try again."
+      };
       context.done();
     }
     
