@@ -11,6 +11,7 @@ module.exports = function (context, req) {
     const name = body.user_name;
     const slacktxt = body.text;
 
+    context.log(req);
     context.log(body);
 
     // if (process.env.SLACK_CHANNEL_NAMES.split(' ').indexOf(body.channel_name) === -1) {
