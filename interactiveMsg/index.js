@@ -17,17 +17,24 @@ module.exports = function (context, req) {
     }, function(err,data) {
       if(data) {
 
-        context.log(data);
-
         let botResponse = (payload.callback_id === 'brewery_choice') ? 
-          `I found a description of *${ data.name }* from *${ data.breweries[0].name }* for you.\n ${ data.style.description }` :
-          `I found a description of *${ data.name }* for you.\n ${ data.style.description }`;
+          `I found a description of *${ data.name }* from *${ data.breweries[0].name }* for you.` :
+          `I found a description of *${ data.name }* for you.`;
+
+        let icon = (data.labels && data.labels.icon) ? data.labels.icon : 'no image';
 
         context.res = {
           mrkdwn: true,
-          replace_original: true,
           response_type: 'in_channel',
-          text: botResponse
+          attachments: [
+            {
+              fallback: `${ botResponse }\n ${ data.style.description }`,
+              pretext: botResponse,
+              text: `${ data.style.description }`,
+              image_url: icon,
+              thumb_url: icon
+            }
+          ]
         };
         context.done();
 
