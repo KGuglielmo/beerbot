@@ -47,6 +47,8 @@ module.exports = function (context, slacktxt) {
             });
           });
 
+          context.log(breweriesArr);
+
           botResponse = {
             text: `A lot of breweries use the name ${ beerName }.`,
             response_type: 'in_channel',
@@ -68,7 +70,6 @@ module.exports = function (context, slacktxt) {
               }
             ]
           };
-          // TODO choose the brewery and search with beer and brewery
 
         } else { // Found 1 beer match
           botResponse = {
@@ -83,6 +84,8 @@ module.exports = function (context, slacktxt) {
             value: result.id
           });
         });
+
+        context.log(beerArr);
 
         botResponse = {
           response_type: 'in_channel',
@@ -105,7 +108,6 @@ module.exports = function (context, slacktxt) {
             }
           ]
         };
-        // TODO choose a beer and search again
       }
 
 

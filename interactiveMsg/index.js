@@ -1,5 +1,7 @@
 'use strict';
 
+const BreweryDb = require('brewerydb-node');
+const brewdb = new BreweryDb('bcb8be42a4c08b303ae4efdf82aaaa3d');
 const qs = require('qs');
 const beerDescription = require('../beerDescription');
 
@@ -12,22 +14,24 @@ module.exports = function (context, req) {
 
     context.log(selectedVal);
 
-    if ( payload.callback_id === 'beer_choice' ) {
-      context.log('beer choice');
-      context.res = {
-        "response_type": "in_channel",
-        "replace_original": true,
-        "text": "Still under construction, but I'll show you your beer answer soon."
-      };
-      context.done();
-    } else if ( payload.callback_id === 'brewery_choice' ) {
-      context.log('brewery choice');
-      context.res = {
-        "response_type": "in_channel",
-        "replace_original": true,
-        "text": "Still under construction, but I'll show you your brewery answer soon."
-      };
-      context.done();
+    if ( true ) {
+      brewdb.beer.getById(selectedVal, {}, function(err,data) {
+        if(data) {
+          context.res = {
+            response_type: 'in_channel',
+            replace_original: true,
+            text: data.style.description
+          };
+          context.done();
+        } else {
+          context.res = {
+            response_type: 'in_channel',
+            replace_original: true,
+            text: "Error in finding that beer."
+          };
+          context.done();
+        }
+      });      
     } else {
       context.res = {
         "response_type": "ephemeral",
