@@ -70,10 +70,10 @@ module.exports = function (context, slacktxt) {
           botResponse = {
             mrkdwn: true,
             response_type: 'in_channel',
+            text: `I found a descriptiion of *${ beerName }* for you.`,
             attachments: [
               {
-                fallback: `I found a descriptiion of *${ beerName }* for you.\n ${ resultMatch[0].style.description }`,
-                pretext: `I found a descriptiion of *${ beerName }* for you.`,
+                fallback: `${ resultMatch[0].style.description }`,
                 text: `${ resultMatch[0].style.description }`,
                 image_url: icon,
                 thumb_url: icon

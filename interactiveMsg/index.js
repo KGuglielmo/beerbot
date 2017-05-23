@@ -26,10 +26,10 @@ module.exports = function (context, req) {
         context.res = {
           mrkdwn: true,
           response_type: 'in_channel',
+          text: botResponse,
           attachments: [
             {
-              fallback: `${ botResponse }\n ${ data.style.description }`,
-              pretext: botResponse,
+              fallback: `${ data.style.description }`,
               text: `${ data.style.description }`,
               image_url: icon,
               thumb_url: icon
