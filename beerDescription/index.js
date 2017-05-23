@@ -43,8 +43,7 @@ module.exports = function (context, slacktxt) {
           botResponse = {
             mrkdwn: true,
             response_type: 'in_channel',
-            text: `A lot of breweries use the name *${ beerName }*.\n 
-                  Which *${ beerName }* were you referring to?`,
+            text: `A lot of breweries use the name *${ beerName }*.\n Which *${ beerName }* were you referring to?`,
             attachments: [
               {
                 text: `Choose a brewery to get a description of its ${ beerName }.`,
@@ -68,8 +67,7 @@ module.exports = function (context, slacktxt) {
           botResponse = {
             mrkdwn: true,
             response_type: 'in_channel',
-            text: `I found a descriptiion of *${ beerName }* for you.\n 
-                  ${ resultMatch[0].style.description }`
+            text: `I found a descriptiion of *${ beerName }* for you.\n ${ resultMatch[0].style.description }`
           };
         }
       } else { // Did not find an exact name match, but found similar options
@@ -83,8 +81,7 @@ module.exports = function (context, slacktxt) {
         botResponse = {
           mrkdwn: true,
           response_type: 'in_channel',
-          text: `I do not have an exact description for *${ beerName }*.\n 
-                Do any of these other beer names match what you were looking for?`,
+          text: `I do not have an exact description for *${ beerName }*.\n Do any of these other beer names match what you were looking for?`,
           attachments: [
             {
               text: `Choose a beer to get its description.`,
