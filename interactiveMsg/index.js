@@ -10,35 +10,32 @@ module.exports = function (context, req) {
 
     const body = qs.parse(req.body);
     const payload = JSON.parse(body.payload);
-    const selectedVal = payload.actions[0].selected_options[0].value;
+    const beerId = payload.actions[0].selected_options[0].value;
 
-    context.log(selectedVal);
+    brewdb.beer.getById(beerId, {
+       withBreweries: 'Y'
+    }, function(err,data) {
+      if(data) {
 
-    if ( true ) {
-      brewdb.beer.getById(selectedVal, {}, function(err,data) {
-        if(data) {
-          context.res = {
-            response_type: 'in_channel',
-            replace_original: true,
-            text: data.style.description
-          };
-          context.done();
-        } else {
-          context.res = {
-            response_type: 'in_channel',
-            replace_original: true,
-            text: "Error in finding that beer."
-          };
-          context.done();
-        }
-      });      
-    } else {
-      context.res = {
-        "response_type": "ephemeral",
-        "replace_original": false,
-        "text": "Sorry, that didn't work. Please try again."
-      };
-      context.done();
-    }
+        let botResponse = (payload.callback_id === 'brewery_choice') ? 
+          "I found a descriptiion of " + data.name + " from " + data.breweries[0].name + " for you.\n" + data.style.description : 
+          "I found a descriptiion of " + data.name + " for you.\n" + data.style.description;
+
+        context.res = {
+          response_type: 'in_channel',
+          replace_original: true,
+          text: botResponse
+        };
+        context.done();
+
+      } else {
+        context.res = {
+          response_type: 'in_channel',
+          replace_original: true,
+          text: `Error! I cannot find the description of that beer.`
+        };
+        context.done();
+      }
+    });      
     
 };

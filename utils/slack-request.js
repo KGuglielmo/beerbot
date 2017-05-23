@@ -15,10 +15,9 @@ const defaults = {
 	channel_name: 'test',
 	user_id: 'U2147483697',
 	user_name: 'Katherine',
-	command: '/beerstein',
-  text: 'tell me about Yuengling',
+	command: '/describe',
+  text: 'Yuengling',
   response_url: 'https://hooks.slack.com/commands/1234/5678'
-  // trigger_word: 'BeerStein'
 };
 
 module.exports = function (params) {

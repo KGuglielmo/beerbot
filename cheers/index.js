@@ -1,13 +1,13 @@
-"use strict";
+'use strict';
 
 module.exports = function (context, name) {
     context.res = {
         response_type: 'in_channel',
         attachments: [
             {
-                fallback: "Cheers to you, " + name + "!",
-                text: "Cheers to you, " + name + "!",
-                image_url: "https://thechive.files.wordpress.com/2017/02/cheers_lead.jpg?quality=85&strip=info"
+                fallback:  `Cheers to you, ${ name }!.`,
+                text: `Cheers to you, ${ name }!.`,
+                image_url: 'https://thechive.files.wordpress.com/2017/02/cheers_lead.jpg?quality=85&strip=info'
             }
         ]
     };

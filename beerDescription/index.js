@@ -4,15 +4,9 @@ const BreweryDb = require('brewerydb-node');
 const brewdb = new BreweryDb('bcb8be42a4c08b303ae4efdf82aaaa3d');
 const qs = require('qs');
 
-// TODO
-// what if two beers have the same name i.e. Virginia Lager, Oktoberfest? list the possibility of answers to choose from
-// what if you get close to the name of the beer but not the exact name, i.e. Yuenging Lager/Yuengling Traditional Lager
-// double check that my regex will work for all scenarios
-
-
 
 module.exports = function (context, slacktxt) {
-  const beerName = slacktxt.split('tell me about')[1].replace(/\./g, '').replace(/\?/g, '').replace(/\!/g, '').trim(); //.replace(/\b[-.,()&$#!\[\]{}"']+\B|\B[-.,()&$#!\[\]{}"']+\b/g, "").trim();
+  const beerName = slacktxt.replace(/\./g, '').replace(/\?/g, '').replace(/\!/g, '').trim(); 
   let botResponse; 
   let resultMatch = [];
   let resultUnmatch = [];
@@ -26,7 +20,6 @@ module.exports = function (context, slacktxt) {
     withBreweries: 'Y'
   }, function(err, data) {
     if(data) {
-
       data.map(function(result) {
         const beer = result.name.toLowerCase().trim();
         const chosenBeer = beerName.toLowerCase().trim();
@@ -47,14 +40,12 @@ module.exports = function (context, slacktxt) {
             });
           });
 
-          context.log(breweriesArr);
-
           botResponse = {
-            text: `A lot of breweries use the name ${ beerName }.`,
+            text: `A lot of breweries use the name ${ beerName }. Which ${ beerName } were you referring to?`,
             response_type: 'in_channel',
             attachments: [
               {
-                text: `Choose the brewery with the ${ beerName } that you want me to tell you about.`,
+                text: `Choose a brewery to get a description of its ${ beerName }.`,
                 fallback: 'You are unable to choose a brewery',
                 callback_id: 'brewery_choice',
                 color: '#3AA3E3',
@@ -74,7 +65,7 @@ module.exports = function (context, slacktxt) {
         } else { // Found 1 beer match
           botResponse = {
             response_type: 'in_channel',
-            text: resultMatch[0].style.description
+            text: "I found a descriptiion of " + beerName + " for you.\n" + resultMatch[0].style.description
           };
         }
       } else { // Did not find an exact name match, but found similar options
@@ -85,14 +76,12 @@ module.exports = function (context, slacktxt) {
           });
         });
 
-        context.log(beerArr);
-
         botResponse = {
           response_type: 'in_channel',
-          text: `Sorry, ${ beerName } does not sound familiar to me. But maybe you meant a different beer name?`,
+          text: `I do not have an exact description for ${ beerName }. Do any of these other beer names match what you were looking for?`,
           attachments: [
             {
-              text: `Choose the correct beer.`,
+              text: `Choose a beer to get its description.`,
               fallback: 'You are unable to choose a beer',
               callback_id: 'beer_choice',
               color: '#3AA3E3',
@@ -109,16 +98,16 @@ module.exports = function (context, slacktxt) {
           ]
         };
       }
-
-
     } else { // No matches/data found
       botResponse = {
         response_type: 'in_channel',
-        text: 'Sorry, I\'m too drunk to remember anything about that beer.'
+        text: `${ beerName } is an invalid beer name.`
       }
     }
+
     context.res = botResponse;
     context.done();
+
   });
 };
 
