@@ -64,12 +64,26 @@ module.exports = function (context, slacktxt) {
           };
 
         } else { // Found 1 beer match
+
+          let icon = (resultMatch[0].labels && resultMatch[0].labels.icon) ? resultMatch[0].labels.icon : 'no image';
+
           botResponse = {
             mrkdwn: true,
             response_type: 'in_channel',
-            text: `I found a descriptiion of *${ beerName }* for you.\n ${ resultMatch[0].style.description }`
+            attachments: [
+              {
+                fallback: `I found a descriptiion of *${ beerName }* for you.\n ${ resultMatch[0].style.description }`,
+                pretext: `I found a descriptiion of *${ beerName }* for you.`,
+                text: `${ resultMatch[0].style.description }`,
+                image_url: icon,
+                thumb_url: icon
+              }
+            ]
           };
+
+
         }
+
       } else { // Did not find an exact name match, but found similar options
         resultUnmatch.map(function(result) {
           beerArr.push({
