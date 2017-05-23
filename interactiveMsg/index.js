@@ -17,9 +17,11 @@ module.exports = function (context, req) {
     }, function(err,data) {
       if(data) {
 
+        context.log(payload.callback_id);
+
         let botResponse = (payload.callback_id === 'brewery_choice') ? 
-          `I found a descriptiion of *${ data.name }* for you.\n ${ data.style.description }` :
-          `I found a descriptiion of *${ data.name }* from *${ data.breweries[0].name }* for you.\n ${ data.style.description }`;
+          `I found a description of *${ data.name }* from *${ data.breweries[0].name }* for you.\n ${ data.style.description }` :
+          `I found a description of *${ data.name }* for you.\n ${ data.style.description }`;
 
         context.res = {
           mrkdwn: true,
