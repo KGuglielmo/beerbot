@@ -18,12 +18,13 @@ module.exports = function (context, req) {
       if(data) {
 
         let botResponse = (payload.callback_id === 'brewery_choice') ? 
-          "I found a descriptiion of " + data.name + " from " + data.breweries[0].name + " for you.\n" + data.style.description : 
-          "I found a descriptiion of " + data.name + " for you.\n" + data.style.description;
+          `I found a descriptiion of *${ data.name }* for you.\n ${ data.style.description }` :
+          `I found a descriptiion of *${ data.name }* from *${ data.breweries[0].name }* for you.\n ${ data.style.description }`;
 
         context.res = {
-          response_type: 'in_channel',
+          mrkdwn: true,
           replace_original: true,
+          response_type: 'in_channel',
           text: botResponse
         };
         context.done();
