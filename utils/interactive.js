@@ -2,7 +2,7 @@
 
 const minimist = require('minimist');
 const qs = require('qs');
-const interactiveMsg = require('../interactiveMsg');
+const interactiveMsg = require('../interactive-msg');
 const argv = minimist(process.argv.slice(2));
 const context = require('./context');
 const req = require('./action-request');

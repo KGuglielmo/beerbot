@@ -3,7 +3,6 @@
 const BreweryDb = require('brewerydb-node');
 const brewdb = new BreweryDb('bcb8be42a4c08b303ae4efdf82aaaa3d');
 const qs = require('qs');
-const beerDescription = require('../beerDescription');
 
 module.exports = function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
@@ -17,11 +16,11 @@ module.exports = function (context, req) {
     }, function(err,data) {
       if(data) {
 
-        let botResponse = (payload.callback_id === 'brewery_choice') ? 
+        const botResponse = (payload.callback_id === 'brewery_choice') ? 
           `I found a description of *${ data.name }* from *${ data.breweries[0].name }* for you.` :
           `I found a description of *${ data.name }* for you.`;
 
-        let icon = (data.labels && data.labels.icon) ? data.labels.icon : 'no image';
+        const icon = (data.labels && data.labels.icon) ? data.labels.icon : 'no image';
 
         context.res = {
           mrkdwn: true,

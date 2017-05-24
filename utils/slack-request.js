@@ -1,7 +1,7 @@
 'use strict';
 
-// node utils/beerbot.js
-// node utils/beerbot.js --text="cheers"
+// node utils/beerstein-init.js
+// node utils/beerstein-init.js --text="cheers"
 
 const qs = require('qs');
 

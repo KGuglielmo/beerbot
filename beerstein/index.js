@@ -1,8 +1,8 @@
 'use strict';
 
 const qs = require('qs');
-const beerDescription = require('../beerDescription');
-const cheers = require('../cheers');
+const beerDescription = require('../commands/beer-description');
+const cheers = require('../commands/cheers');
 
 module.exports = function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
