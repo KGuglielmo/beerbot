@@ -1,7 +1,7 @@
 'use strict';
 
 const BreweryDb = require('brewerydb-node');
-const brewdb = new BreweryDb('bcb8be42a4c08b303ae4efdf82aaaa3d');
+const brewdb = new BreweryDb(process.env.BREWERY_DB_API_KEY);
 const qs = require('qs');
 
 module.exports = function (context, req) {
