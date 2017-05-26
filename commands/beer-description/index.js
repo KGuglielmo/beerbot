@@ -1,13 +1,13 @@
 'use strict';
 
-const BreweryDb = require('brewerydb-node');
-const brewdb = new BreweryDb(process.env.BREWERY_DB_API_KEY);
-const qs = require('qs');
-
-
 module.exports = function (context, slacktxt) {
+  const BreweryDb = require('brewerydb-node');
+  const brewdb = new BreweryDb(process.env.BREWERY_DB_API_KEY);
+  const qs = require('qs');
+  const services = require('../../core/services');
+
   const beerName = slacktxt.replace(/\./g, '').replace(/\?/g, '').replace(/\!/g, '').trim(); 
-  let botResponse; 
+  let response; 
   let resultMatch = [];
   let resultUnmatch = [];
   let breweriesArr = [];
@@ -20,7 +20,7 @@ module.exports = function (context, slacktxt) {
     withBreweries: 'Y'
   }, function(err, data) {
     if(data) {
-      data.map(function(result) {
+      data.map((result) => {
         const beer = result.name.toLowerCase().trim();
         const chosenBeer = beerName.toLowerCase().trim();
         if ( beer === chosenBeer ) {
@@ -33,18 +33,17 @@ module.exports = function (context, slacktxt) {
 
       if (foundBeer === true) {
         if ( resultMatch.length > 1 ) { // Found multiple beer matches with the same name
-          resultMatch.map(function(result) {
-            breweriesArr.push({
+
+          breweriesArr.push(resultMatch.map((result) => {
+            return {
               text: result.breweries[0].name,
               value: result.id
-            });
-          });
+            }
+          }));
 
-          botResponse = {
-            mrkdwn: true,
-            response_type: 'in_channel',
-            text: `A lot of breweries use the name *${ beerName }*.\n Which *${ beerName }* were you referring to?`,
-            attachments: [
+          response = services.slack.message(
+            `A lot of breweries use the name *${ beerName }*.\n Which *${ beerName }* were you referring to?`,
+            [
               {
                 text: `Choose a brewery to get a description of its ${ beerName }.`,
                 fallback: 'You are unable to choose a brewery',
@@ -61,17 +60,15 @@ module.exports = function (context, slacktxt) {
                 ]
               }
             ]
-          };
+          );
 
         } else { // Found 1 beer match
 
           let icon = (resultMatch[0].labels && resultMatch[0].labels.icon) ? resultMatch[0].labels.icon : 'no image';
 
-          botResponse = {
-            mrkdwn: true,
-            response_type: 'in_channel',
-            text: `I found a descriptiion of *${ beerName }* for you.`,
-            attachments: [
+          response = services.slack.message(
+            `I found a descriptiion of *${ beerName }* for you.`,
+            [
               {
                 fallback: `${ resultMatch[0].style.description }`,
                 text: `${ resultMatch[0].style.description }`,
@@ -79,24 +76,22 @@ module.exports = function (context, slacktxt) {
                 thumb_url: icon
               }
             ]
-          };
-
+          );
 
         }
 
       } else { // Did not find an exact name match, but found similar options
-        resultUnmatch.map(function(result) {
-          beerArr.push({
+
+        beerArr.push(resultUnmatch.map((result) => {
+          return {
             text: result.name,
             value: result.id
-          });
-        });
+          }
+        }));
 
-        botResponse = {
-          mrkdwn: true,
-          response_type: 'in_channel',
-          text: `I do not have an exact description for *${ beerName }*.\n Do any of these other beer names match what you were looking for?`,
-          attachments: [
+        response = services.slack.message(
+          `I do not have an exact description for *${ beerName }*.\n Do any of these other beer names match what you were looking for?`,
+          [
             {
               text: `Choose a beer to get its description.`,
               fallback: 'You are unable to choose a beer',
@@ -113,16 +108,15 @@ module.exports = function (context, slacktxt) {
               ]
             }
           ]
-        };
+        );
+
       }
     } else { // No matches/data found
-      botResponse = {
-        response_type: 'in_channel',
-        text: `${ beerName } is an invalid beer name.`
-      }
+      context.log(err);
+      response = services.slack.message(`${ beerName } is an invalid beer name.`);
     }
 
-    context.res = botResponse;
+    context.res = response;
     context.done();
 
   });

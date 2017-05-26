@@ -3,6 +3,7 @@
 const qs = require('qs');
 const beerDescription = require('../commands/beer-description');
 const cheers = require('../commands/cheers');
+const services = require('../core/services');
 
 module.exports = function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
@@ -17,10 +18,7 @@ module.exports = function (context, req) {
     } else if ( command === '/cheers' ) {
         cheers(context, name);
     } else {
-        context.res = {
-          response_type: 'in_channel',
-          text: 'I\'m too busy drinking to answer you right now.'
-        };
+        services.slack.message(`I am too busy drinking to answer you right now.`);
         context.done();
     }
 };
