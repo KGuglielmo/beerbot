@@ -34,12 +34,12 @@ module.exports = function (context, slacktxt) {
       if (foundBeer === true) {
         if ( resultMatch.length > 1 ) { // Found multiple beer matches with the same name
 
-          breweriesArr.push(resultMatch.map((result) => {
-            return {
+          resultMatch.map((result) => {
+            breweriesArr.push({
               text: result.breweries[0].name,
               value: result.id
-            }
-          }));
+            });
+          });
 
           response = services.slack.message(
             `A lot of breweries use the name *${ beerName }*.\n Which *${ beerName }* were you referring to?`,
@@ -82,12 +82,12 @@ module.exports = function (context, slacktxt) {
 
       } else { // Did not find an exact name match, but found similar options
 
-        beerArr.push(resultUnmatch.map((result) => {
-          return {
+        resultUnmatch.map((result) => {
+          beerArr.push({
             text: result.name,
             value: result.id
-          }
-        }));
+          });
+        });
 
         response = services.slack.message(
           `I do not have an exact description for *${ beerName }*.\n Do any of these other beer names match what you were looking for?`,

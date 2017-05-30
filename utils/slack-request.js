@@ -15,8 +15,8 @@ const defaults = {
 	channel_name: 'test',
 	user_id: 'U2147483697',
 	user_name: 'Katherine',
-	command: '/describe',
-  text: 'Yuengling',
+	command: '/cheers',
+  text: 'oktoberfest',
   response_url: 'https://hooks.slack.com/commands/1234/5678'
 };
 

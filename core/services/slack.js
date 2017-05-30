@@ -1,8 +1,8 @@
-const message = (text, attachements = '') => ({
+const message = (text, attachments = '') => ({
 	mrkdwn: true,
   response_type: 'in_channel',
   text,
-  attachements
+  attachments
 });
 
 module.exports = {
