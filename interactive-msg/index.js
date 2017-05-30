@@ -28,6 +28,7 @@ module.exports = function (context, req) {
           {
             fallback: `${ data.style.description }`,
             text: `${ data.style.description }`,
+            color: 'good',
             image_url: icon,
             thumb_url: icon
           }

@@ -8,6 +8,7 @@ module.exports = function (context, name) {
     [
       {
         fallback:  `Cheers!`,
+        color: 'good',
         image_url: 'https://thechive.files.wordpress.com/2017/02/cheers_lead.jpg?quality=85&strip=info'
       }
     ]
